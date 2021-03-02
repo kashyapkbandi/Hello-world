@@ -1,0 +1,32 @@
+public class Dumper {
+    
+    //  Write logic which takes list of accounts, and  creates 3 contacts for accounts whose industry is biotechnology 
+    //  ( only if the contacts does not exist for that account)     
+    public static void contactCreator(List<Account> accountsList)
+    {
+        List<contact> contactList = new List<Contact>();
+        
+        for(Account acc:accountsList){
+            // if industry is biotechnology
+            if(acc.Industry == 'Biotechnology'){
+                
+                // checking for contact count
+                if([SELECT count() from Contact WHERE AccountId=:acc.Id] == 0){
+                       
+                       // looping for 3 contacts	
+                       for(integer i=0;i<3;i++)
+                       {
+                           Contact c = new Contact();
+                           c.lastName = 'TestLast'+i;
+                           // associating contact to account.
+                           c.AccountId = acc.Id;
+                           contactList.add(c);
+                       }
+                       System.debug('ContactList'+contactList);
+                       insert contactList;
+                       
+                   }
+            }
+        }
+    }
+}
